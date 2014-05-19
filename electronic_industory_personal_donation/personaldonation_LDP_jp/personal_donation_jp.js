@@ -1,5 +1,5 @@
-var width = 760,
-height = 600;
+var width = 700;
+var height = 600;
 
 var svg = d3.select("body").append("svg")
 .attr("width", width)
@@ -35,12 +35,14 @@ d3.json("electro_donation_LDP_2007-2011.json", function(data){
 	var list_length = persons.length; 
 	
   x.domain([0,list_length]);
-	y.domain([0,40]);
+	y.domain([0,45]);
 	//　名目値でdomainを作るためにリストの長さを上限にする。
 	r.domain([0,list_length]);
 	
 	
-	var gs = svg.attr("transform","translate(" + width/2 + "," + height/2 + ")")
+	var gs = svg.append("g")
+	.attr("transform","translate(" + (width/2) + "," + (height/2) + ")")
+	.attr("id","main-g")
 .selectAll("g")
 	.data(persons) // Use pie to get radian adjuted whole of the data.
 	.enter()
@@ -79,7 +81,7 @@ d3.json("electro_donation_LDP_2007-2011.json", function(data){
 	.attr("opacity",0.2);
 	
 	//ツールチップはsvg.からではなく、d3.selectからやらないと反映されない。
-	var year_tooltip = d3.select("svg").append("g")
+	var year_tooltip = d3.select("#main-g").append("g")
 	.append("text")
 	.attr("font-size","60px")
 	.attr("fill","black")
@@ -89,7 +91,7 @@ d3.json("electro_donation_LDP_2007-2011.json", function(data){
 	.attr("opacity",0.5)
 	.text("2007");
 	
-	var description_tooltip = d3.select("svg").append("g")
+	var description_tooltip = d3.select("#main-g").append("g")
 	.append("text")
 	.attr("font-size","25px")
 	.attr("fill","blue")
